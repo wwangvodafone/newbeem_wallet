@@ -1,0 +1,8 @@
+1. npm install --save react-bootstrap bootstrap@3
+2. npm install --save reactstrap react@^16.3.2 react-dom@^16.3.2
+3. npm install web3@0.20.0
+
+
+solc
+1. npm install solc@0.4.25
+2. npm install abi-decoder
