@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
+import logo from './images/newbeem.png'
 import {
   Alert,
   TabContent,
@@ -89,24 +90,38 @@ import { SelectPicker } from 'rsuite';
 
   render () {
     return (
-      <div>
-        <Row>
-          <Col>
-            <Alert color="light">
-              
-            </Alert>              
-          </Col>
-        </Row>
+      <div class="container">
         <Form onSubmit={this.DeployContract}>
+          <img src={logo} alt="newbeem" width="200" height="80"/>
           <FormGroup>
-            <Label for="Contract Binary">Contract Binary</Label>
-            <Input type="text" name="binary" id="binary" placeholder="Contract Binary" ref={node => {this.inputValue = node}} onChange={this.UpdateContractBinary}/>
-            <Label for="accountEthersName">Account Deploy Contract:</Label>
-            <Input type="text" name="accountethers" id="accountEthersName" placeholder="Account For Deploy Contract" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountValue}/>
-             <Label for="accountpasswdName">Account Password:</Label>
-             <Input type="text" name="accountpasswd" id="accountPasswdName" placeholder="Password For Account" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountPassword}/> 
+            <div className="row">
+              <div className="col-25">
+                <Label for="Contract Binary">Contract Binary:</Label>
+              </div>
+              <div className="col-75">
+                <Input type="text" name="binary" id="binary" placeholder="Contract Binary" ref={node => {this.inputValue = node}} onChange={this.UpdateContractBinary}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-25">
+                <Label for="accountEthersName">Account Deploy Contract:</Label>
+              </div>
+              <div className="col-75">
+                <Input type="text" name="accountethers" id="accountEthersName" placeholder="Account For Deploy Contract" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountValue}/>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-25">
+                <Label for="accountpasswdName">Account Password:</Label>
+              </div>
+              <div className="col-75">
+                <Input type="text" name="accountpasswd" id="accountPasswdName" placeholder="Password For Account" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountPassword}/> 
+              </div>
+            </div>
           </FormGroup>
-          <Button color="primary" >Deploy Contract:</Button>
+          <div className="row">
+            <input type="submit" value="Deploy Contract"/>
+          </div>
           <table>
                 <tbody>
                   <tr>

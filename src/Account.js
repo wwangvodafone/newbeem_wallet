@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
+import logo from './images/newbeem.png'
+import line from './images/line.png'
 import {
   Alert,
   TabContent,
@@ -98,19 +100,22 @@ class Account extends Component {
   }
   render () {
       return (
-        <div>
-            <Row>
-            <Col>
-              <Alert color="light">
-                
-              </Alert>              
-            </Col>
-          </Row>
-          <Form onSubmit={this.CreateAccount}>
-            <FormGroup>
-              <Label for="accountName">Account Key</Label>
-              <Input type="text" name="account" id="accountName" placeholder="Account Name" ref={node => {this.inputValue = node}} onChange={this.UpdateInputValue}/>
-            </FormGroup>
+        <div className="container">
+          <img src={logo} alt="newbeem" width="200" height="80"/>
+
+          <Form onSubmit={this.CreateAccount}>         
+              <div className="row">
+                <div className="col-25">
+                  <Label for="accountName">Account Key:</Label>
+                </div>
+                <div className="col-75">
+                  <Input type="text" name="account" id="accountName" placeholder="Account Name" ref={node => {this.inputValue = node}} onChange={this.UpdateInputValue}/>
+                </div>
+              </div>
+              <div className="row">
+                <input type="submit" value="Create Account"/>
+              </div>
+
             <FormGroup>
               <FormText color="muted">
                 After creating the account,                                                                                            
@@ -118,51 +123,72 @@ class Account extends Component {
                 If you lose the account, you can not recover it.
               </FormText>
             </FormGroup>
-            <Button color="primary" >Create Account:</Button>
-            <FormGroup>
+             <FormGroup>
               <table>
                 <tbody>
                   <tr>
                     <td>Account:</td>
-                    <td>{this.state.accountRslt}</td>
+                    <td class="color">{this.state.accountRslt}</td>
                   </tr>
                 </tbody>
               </table>
             </FormGroup>
           </Form>
-
+          <img src={line} alt="line" width="800" height="20"/>
           <Form onSubmit={this.GetEthers}>
-            <FormGroup>
-              <Button color="primary">Get Ethers</Button>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Balance:</td>
-                    <td>{this.state.balanceRslt}</td>
-                  </tr>
-                </tbody>
-              </table>  
-            </FormGroup>         
+              <div class="row">
+                <input type="submit" value="Get Ethers"/>
+              </div>
+              <div class="row5">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Balance:</td>
+                      <td class="color">{this.state.balanceRslt}</td>
+                    </tr>
+                  </tbody>
+                </table>  
+              </div>
+  
           </Form>
+
+          <img src={line} alt="line" width="800" height="20"/>
           <Form onSubmit={this.ShowEthers}>
             <FormGroup>
-              <Label for="accountEthersName">Account For Ethers Showing:</Label>
-              <Input type="text" name="accountethers" id="accountEthersName" placeholder="Account For Ethers Showing" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountEtherValue}/>
-              <Label for="accountpasswdName">Account Password:</Label>
-              <Input type="text" name="accountpasswd" id="accountPasswdName" placeholder="Password For Account" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountPassword}/>
+              <div class="row">
+                <div class="col-25">
+                  <Label for="accountEthersName">Account For Ethers Showing:</Label>
+                </div>
+                <div class="col-75">
+                  <Input type="text" name="accountethers" id="accountEthersName" placeholder="Account For Ethers Showing" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountEtherValue}/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <Label for="accountpasswdName">Account Password:</Label>
+                </div>
+                <div class="col-75">
+                  <Input type="text" name="accountpasswd" id="accountPasswdName" placeholder="Password For Account" ref={node => {this.inputValue = node}} onChange={this.UpdateAccountPassword}/>
+                </div>
+              </div>
             </FormGroup>
             <FormGroup>
-              <Button color="primary">Show Ethers</Button>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Balance:</td>
-                    <td>{this.state.accountBalance}</td>
-                  </tr>
-                </tbody>
-              </table> 
+              <div class="row">
+                <input type="submit" value="Show Ethers"/>
+              </div>
+              <div class="row">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Balance:</td>
+                      <td>{this.state.accountBalance}</td>
+                    </tr>
+                  </tbody>
+                </table> 
+            </div>
             </FormGroup>          
           </Form>
+
         </div>  
       );
   }
