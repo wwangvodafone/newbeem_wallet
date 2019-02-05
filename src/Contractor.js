@@ -18,6 +18,7 @@ import {
   Input,
  } from 'reactstrap';
 import { SelectPicker } from 'rsuite';
+import { fromNodeAddress } from 'multiaddr';
 
  class Contractor extends Component {
   constructor(props) {
@@ -31,6 +32,8 @@ import { SelectPicker } from 'rsuite';
       accountDeployBalance: 0
     };
     this.inputValue
+    this.sendTransac = this.sendTransac.bind(this);
+    this.getResults = this.getResults.bind(this);
     const nodeAdd = 'http://192.157.241.6:8501'
     this.web3 = new Web3(new Web3.providers.HttpProvider('http://133.18.23.48:8545'));
     console.debug(this.web3.isConnected())
@@ -57,7 +60,8 @@ import { SelectPicker } from 'rsuite';
     console.debug(this.state.accountDeploy);
     console.debug(this.state.accountDeployPasswd)
     this.web3.personal.unlockAccount(this.state.accountDeploy, this.state.accountDeployPasswd);
-
+    this.sendTransac (this.getResults);
+/*
     var binary = "0x" + this.state.contractBin;
     this.web3.eth.sendTransaction({ from: this.state.accountDeploy, data: binary, gas: 500e3 }, (error, tx) => {
       if (error) {
@@ -85,7 +89,34 @@ import { SelectPicker } from 'rsuite';
         
       }
     });
+    */
+  }
 
+  sendTransac(callback) {
+    var binary = "0x" + this.state.contractBin;
+    this.web3.eth.sendTransaction({ from: this.state.accountDeploy, data: binary, gas: 500e3 }, (error, tx) => {
+      if (error) {
+        console.debug("error:"+ error);
+        callback(error); 
+      }
+      else {
+        var address = this.web3.eth.getTransactionReceipt(tx);
+        if (address != null) {
+          address = address.contractAddress;
+          callback(address);
+        }
+        else {
+          callback("mining...");
+        } 
+      }
+      
+    });
+  }
+
+
+  getResults(address) {
+    console.debug("contract address=" + address);
+    this.setState({ deployAddress: address });
   }
 
   render () {

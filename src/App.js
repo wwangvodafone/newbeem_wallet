@@ -4,6 +4,7 @@ import Info from './Info';
 import Account from './Account';
 import Contractor from './Contractor';
 import Finger from './Finger';
+import Operation from './Operation';
 
 import {
   Alert,
@@ -73,6 +74,14 @@ class App extends Component {
             >
               Figure
             </NavLink>
+          </NavItem>   
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === '5' })}
+              onClick={() => { this.toggle('5'); }}
+            >
+              Operation
+            </NavLink>
           </NavItem>          
           <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1"> 
@@ -86,6 +95,9 @@ class App extends Component {
           </TabPane>
           <TabPane tabId="4">
             <Finger finger />
+          </TabPane>
+          <TabPane tabId="5">
+            <Operation operation />
           </TabPane>
         </TabContent>          
         </Nav>        

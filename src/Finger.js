@@ -4,7 +4,10 @@ import ipfsAPI from 'ipfs-http-client';
 import logo from './images/newbeem.png'
 import {
   Form,
+  FormText,
   FormGroup,
+  Label,
+  Input,
  } from 'reactstrap';
 
 class Finger extends Component {
@@ -13,13 +16,43 @@ class Finger extends Component {
       this.state = {
         file: '',
         imagePreviewUrl: '',
-        added_file_hash: ''
+        added_file_hash: '',
+        contractAbiVal: '',
+        contractAddress: '',
+        fileHash: '',
+        saveResult:'',
       };
       this._handleImageChange = this._handleImageChange.bind(this);
       this._handleSubmit = this._handleSubmit.bind(this);
       this.ipfsApi = ipfsAPI('localhost', '5001')
+      this.web3 = new Web3(new Web3.providers.HttpProvider('http://133.18.23.48:8545'));
+      console.debug(this.web3.isConnected())
     }
   
+    UpdateContractAbiValue = (e) => {
+      e.preventDefault();
+      this.setState({ contractAbiVal: e.target.value })
+    }
+  
+    UpdateContractAddr = (e) => {
+      e.preventDefault();
+      this.setState({ contractAddress: e.target.value })
+    }
+
+    UpdateFileHash = (e) => {
+      e.preventDefault();
+      this.setState({ fileHash: e.target.value })
+    }
+
+    SaveToEther= (e) => {
+      e.preventDefault();
+      console.debug("abi:" + this.state.contractAbiVal);
+      console.debug("address:" + this.state.contractAddress);
+      var abiJson = JSON.parse(this.state.contractAbiVal);
+      var contract = this.web3.eth.contract(abiJson).at(this.state.contractAddress);
+      //contract.sendHash(this.state.fileHash);
+    }
+
     _handleSubmit(e) {
       e.preventDefault();
       // TODO: do something with -> this.state.file
@@ -69,6 +102,7 @@ class Finger extends Component {
         ipfsId = response[0].hash
         console.log(ipfsId)
         this.setState({added_file_hash: ipfsId})
+        //this.setState({fileHash, ipfsId})
       }).catch((err) => {
         console.error(err)
       })
@@ -99,6 +133,49 @@ class Finger extends Component {
                 </tbody>
               </table>
             </FormGroup>
+          </Form>
+          <Form onSubmit={this.SaveToEther}>
+            <FormGroup>
+              <div class="row">
+                <div class="col-25">
+                  <Label for="contractAbi">Contract ABI:</Label>
+                </div>
+                <div class="col-75">
+                  <Input type="text" name="contractAbi" id="contractAbiName" placeholder="Contract abi for save ipfs hash" ref={node => {this.inputValue = node}} onChange={this.UpdateContractAbiValue}/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <Label for="contractAddress">Contract Address:</Label>
+                </div>
+                <div class="col-75">
+                  <Input type="text" name="contractAddress" id="contractAddrName" placeholder="Contract address for save ipfs hash" ref={node => {this.inputValue = node}} onChange={this.UpdateContractAddr}/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-25">
+                  <Label for="ipfsHash">File Hash:</Label>
+                </div>
+                <div class="col-75">
+                  <Input type="text" name="ipfsHash" id="ipfshashName" placeholder="Hash of the Ipfs file" ref={node => {this.inputValue = node}} onChange={this.UpdateFileHash}/>
+                </div>
+              </div>
+            </FormGroup>
+            <FormGroup>
+              <div class="row">
+                <input type="submit" value="Save Hash"/>
+              </div>
+              <div class="row">
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Save Result:</td>
+                      <td>{this.state.saveResult}</td>
+                    </tr>
+                  </tbody>
+                </table> 
+            </div>
+            </FormGroup>          
           </Form>
         </div>
       )

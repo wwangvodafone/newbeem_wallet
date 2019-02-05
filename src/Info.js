@@ -44,7 +44,7 @@ import {
       }
 
       componentDidMount() {
-        this.interval = setInterval(() => this.getEthereumValues({}), 5000);
+        this.interval = setInterval(() => this.getEthereumValues({}), 10000);
       }
       componentWillUnmount() {
         clearInterval(this.interval);
